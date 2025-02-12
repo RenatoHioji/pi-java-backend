@@ -1,4 +1,4 @@
-package com.sunside_java.sunside;
+package com.sunside;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

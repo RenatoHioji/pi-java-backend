@@ -1,4 +1,4 @@
-package com.sunside_java.sunside;
+package com.sunside;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
