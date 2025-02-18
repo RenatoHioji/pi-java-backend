@@ -14,6 +14,7 @@ import software.amazon.awssdk.transfer.s3.model.CompletedFileUpload;
 import software.amazon.awssdk.transfer.s3.model.FileUpload;
 import software.amazon.awssdk.transfer.s3.model.UploadFileRequest;
 
+import java.io.File;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.concurrent.CompletableFuture;
@@ -26,11 +27,11 @@ public class AWSUtils {
 
     private final S3TransferManager transferManager;
 
-    public String saveFile(String bucketName, String key, URI filePathURI){
+    public String saveFile(String bucketName, String key, File file){
         try{
             UploadFileRequest uploadFileRequest = UploadFileRequest.builder()
                     .putObjectRequest(b -> b.bucket(bucketName).key(key))
-                    .source(Paths.get(filePathURI))
+                    .source(file)
                     .build();
 
             FileUpload fileUpload = transferManager.uploadFile(uploadFileRequest);
