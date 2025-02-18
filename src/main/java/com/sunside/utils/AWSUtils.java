@@ -2,6 +2,7 @@ package com.sunside.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.ProcessCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -27,7 +28,10 @@ public class AWSUtils {
 
     private final S3TransferManager transferManager;
 
-    public String saveFile(String bucketName, String key, File file){
+    @Value("${aws.bucket}")
+    private String bucketName;
+
+    public String saveFile(String key, File file){
         try{
             UploadFileRequest uploadFileRequest = UploadFileRequest.builder()
                     .putObjectRequest(b -> b.bucket(bucketName).key(key))
