@@ -1,7 +1,10 @@
 package com.sunside.controller;
 
+import com.sunside.model.FileDTORequest;
 import com.sunside.utils.AWSUtils;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +15,11 @@ public class TestController {
 
     private final AWSUtils awsUtils;
 
-    @GetMapping
-    ResponseEntity<String> saveFile(){
-        // return ResponseEntity.status(HttpStatus.CREATED).body(awsUtils.saveFile(file.getName(), file));
-        return ResponseEntity.ok().build();
+    @PostMapping
+    ResponseEntity<String> saveFile(
+            @Valid @RequestPart("request") FileDTORequest fileDTORequest
+            ){
+        return ResponseEntity.status(HttpStatus.CREATED).body(awsUtils.saveFile(fileDTORequest.file().getName(), fileDTORequest.file()));
     }
 
 

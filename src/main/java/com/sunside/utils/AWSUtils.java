@@ -1,24 +1,19 @@
 package com.sunside.utils;
 
+import com.sunside.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.auth.credentials.ProcessCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
+import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
-import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.DeleteObjectResponse;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 import software.amazon.awssdk.transfer.s3.model.CompletedFileUpload;
 import software.amazon.awssdk.transfer.s3.model.FileUpload;
 import software.amazon.awssdk.transfer.s3.model.UploadFileRequest;
 
 import java.io.File;
-import java.net.URI;
-import java.nio.file.Paths;
-import java.util.concurrent.CompletableFuture;
+import java.nio.file.Files;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +26,9 @@ public class AWSUtils {
     @Value("${aws.bucket}")
     private String bucketName;
 
-    public String saveFile(String key, File file){
+    public String saveFile(String key, MultipartFile multipartFile){
         try{
+            File file = this.convertToFile(multipartFile);
             UploadFileRequest uploadFileRequest = UploadFileRequest.builder()
                     .putObjectRequest(b -> b.bucket(bucketName).key(key))
                     .source(file)
@@ -47,6 +43,15 @@ public class AWSUtils {
             // Do something when error on save
             return null;
         }
+    }
+
+    private File convertToFile(MultipartFile multipartFile) {
+        try {
+            return Files.createTempFile("temp-", multipartFile.getOriginalFilename()).toFile();
+        } catch (Exception e) {
+            throw new BusinessException("Não foi possível transformar o item em arquivo.");
+        }
+
     }
 
     public void deleteFile(String bucketName, String key){
