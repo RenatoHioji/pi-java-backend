@@ -1,4 +1,4 @@
-package com.sunside.model;
+package com.sunside.dto;
 
 
 import jakarta.validation.constraints.NotEmpty;

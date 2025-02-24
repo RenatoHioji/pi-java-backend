@@ -1,6 +1,6 @@
 package com.sunside.controller;
 
-import com.sunside.model.FileDTORequest;
+import com.sunside.dto.FileDTORequest;
 import com.sunside.utils.AWSUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -13,7 +13,7 @@ import java.util.List;
 @ControllerAdvice
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<Object> handlerBusinessException(BusinessException ex, WebRequest request){
         HttpStatus httpStatus = HttpStatus.valueOf(422);
         ErrorResponseException errorResponseException = new ErrorResponseException(

@@ -2,8 +2,9 @@ package com.sunside;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-g@SpringBootApplication
+@SpringBootApplication
 public class SunsideApplication {
 
 	public static void main(String[] args) {
