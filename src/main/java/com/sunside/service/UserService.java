@@ -1,8 +1,8 @@
 package com.sunside.serice;
 
-import com.sunside.dto.LoginDTORequest;
-import com.sunside.dto.UserDTORequest;
-import com.sunside.dto.UserDTOResponse;
+import com.sunside.dto.user.LoginDTORequest;
+import com.sunside.dto.user.UserDTORequest;
+import com.sunside.dto.user.UserDTOResponse;
 import com.sunside.exceptions.BusinessException;
 import com.sunside.mapper.UserMapper;
 import com.sunside.model.User;
