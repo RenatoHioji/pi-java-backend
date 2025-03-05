@@ -1,4 +1,4 @@
-package com.sunside.dto;
+package com.sunside.dto.user;
 
 import com.sunside.model.User;
 

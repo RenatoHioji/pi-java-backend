@@ -1,7 +1,7 @@
 package com.sunside.mapper;
 
-import com.sunside.dto.UserDTORequest;
-import com.sunside.dto.UserDTOResponse;
+import com.sunside.dto.user.UserDTORequest;
+import com.sunside.dto.user.UserDTOResponse;
 import com.sunside.model.User;
 
 public class UserMapper {

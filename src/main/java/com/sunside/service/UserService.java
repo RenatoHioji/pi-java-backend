@@ -1,4 +1,4 @@
-package com.sunside.serice;
+package com.sunside.service;
 
 import com.sunside.dto.user.LoginDTORequest;
 import com.sunside.dto.user.UserDTORequest;

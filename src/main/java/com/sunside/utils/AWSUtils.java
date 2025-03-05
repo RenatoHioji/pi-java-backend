@@ -40,7 +40,7 @@ public class AWSUtils {
 
             return uploadResult.response().eTag();
         }catch (Exception e){
-            // Do something when error on save
+
             return null;
         }
     }

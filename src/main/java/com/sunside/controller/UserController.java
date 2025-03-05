@@ -1,11 +1,10 @@
 package com.sunside.controller;
 
-import com.sunside.dto.LoginDTORequest;
-import com.sunside.dto.UserDTORequest;
-import com.sunside.dto.UserDTOResponse;
+import com.sunside.dto.user.LoginDTORequest;
+import com.sunside.dto.user.UserDTORequest;
+import com.sunside.dto.user.UserDTOResponse;
 import com.sunside.security.JwtAuthResponse;
-import com.sunside.serice.UserService;
-import com.sunside.model.User;
+import com.sunside.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
@@ -33,8 +32,8 @@ public class UserController {
         return ResponseEntity.status(201).body(userService.create(user));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteById(@PathParam("id") @Parameter(example = "1e283e58-6273-4242-831e-3eb845a692ff") String id){
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable("id") @Parameter(example = "1e283e58-6273-4242-831e-3eb845a692ff") String id){
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
@@ -45,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("{username}")
-    public ResponseEntity<UserDTOResponse> findByUsername(@PathParam("username") String username){
+    public ResponseEntity<UserDTOResponse> findByUsername(@PathVariable("username") String username){
         return ResponseEntity.ok(userService.findByUsername(username));
     }
 }
