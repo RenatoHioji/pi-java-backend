@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<JwtAuthResponse> login(@Valid  LoginDTORequest loginDTORequest){
+    public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginDTORequest loginDTORequest){
         return ResponseEntity.ok(new JwtAuthResponse(userService.login(loginDTORequest)));
     }
 
