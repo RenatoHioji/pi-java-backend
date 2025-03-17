@@ -32,16 +32,7 @@ public class ItemController {
         return ResponseEntity.ok(itemService.findAllByUserId(IdUtills.transformToUuid(userId)));
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
-    @Operation(
-            summary = "Upload multiple files with additional information",
-            description = "Uploads three files along with a title and description"
-    )
-    ResponseEntity<Item> create(@Valid @ModelAttribute ItemDTORequest request){
-        return ResponseEntity.status(201).body(itemService.create(request));
-    }
-
-    @PostMapping("/user/{userId}")
+    @PostMapping(path = "/user/{userId}", consumes = {"multipart/form-data"})
     ResponseEntity<Item> createItemToUser(@PathVariable("userId") String userId, @Valid @ModelAttribute ItemDTORequest request){
         return ResponseEntity.status(201).body(itemService.createToUser(request, IdUtills.transformToUuid(userId)));
 

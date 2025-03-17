@@ -27,15 +27,11 @@ public class ItemService {
         return itemRepository.findAllByUserId(userId);
     }
 
-    public Item create(ItemDTORequest request){
-
-        return itemRepository.save(ItemMapper.map(request));
-    }
-
     public Item update(UUID id, ItemDTORequest request){
-        Item item = itemRepository.findById(id).orElseThrow(() -> new BusinessException("Create"));
-
+        Item item = itemRepository.findById(id).orElseThrow(() -> new BusinessException("Usuário não encontrado"));
+        this.deleteFiles(item);
         Item itemUpdated = ItemMapper.map(item, request);
+        this.saveFiles(request, itemUpdated);
 
         return itemRepository.save(itemUpdated);
     }
@@ -43,11 +39,33 @@ public class ItemService {
     public Item createToUser(ItemDTORequest request, UUID userId){
         Item item = ItemMapper.map(request);
         item.setUserId(userId);
+
+        saveFiles(request, item);
         return itemRepository.save(item);
     }
 
     public void delete(UUID id){
-        itemRepository.deleteById(id);
+        Item item = itemRepository.findById(id)
+                        .orElseThrow(() -> new BusinessException("Item não encontrado"));
+        try{
+            this.deleteFiles(item);
+            itemRepository.deleteById(id);
+
+        }catch (Exception e){
+            throw new BusinessException("Erro ao deletar item");
+        }
+
     }
 
+    public void deleteFiles(Item item){
+        awsUtils.deleteFile(item.getVideo());
+        awsUtils.deleteFile(item.getAudio());
+        awsUtils.deleteFile(item.getImage());
+    }
+
+    public void saveFiles(ItemDTORequest request, Item item){
+        awsUtils.saveFile(item.getVideo(), request.video());
+        awsUtils.saveFile(item.getAudio(), request.audio());
+        awsUtils.saveFile(item.getImage(), request.image());
+    }
 }
