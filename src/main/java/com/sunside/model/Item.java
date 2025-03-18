@@ -27,4 +27,5 @@ public class Item {
 
     @Column(name = "user_id")
     private UUID userId;
+
 }

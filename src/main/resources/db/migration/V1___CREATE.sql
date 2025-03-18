@@ -4,6 +4,18 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS quizzes(
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nivel INT
+);
+
+CREATE TABLE games (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    correct_answer INT,
+    type INT,
+    quiz_id UUID REFERENCES quizzes(id)
+);
+
 CREATE TABLE IF NOT EXISTS items (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255),
@@ -13,5 +25,13 @@ CREATE TABLE IF NOT EXISTS items (
     audio VARCHAR(255),
     category VARCHAR(255),
     subcategory VARCHAR(255),
-    user_id UUID REFERENCES users(id)
+    user_id UUID REFERENCES users(id),
+    game_id UUID REFERENCES games(id)
+    );
+
+CREATE TABLE game_item (
+    game_id UUID REFERENCES games(id) ON DELETE CASCADE,
+    item_id UUID REFERENCES items(id) ON DELETE CASCADE,
+    PRIMARY KEY (game_id, item_id)
 );
+
