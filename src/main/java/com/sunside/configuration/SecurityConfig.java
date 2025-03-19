@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Parameter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -54,18 +55,18 @@ public class SecurityConfig {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
         http.csrf(csrf -> csrf
-                                .disable()
-//                        .csrfTokenRequestHandler(requestHandler)
-//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(requestHandler)
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers("/v1/user/login")
+                        .ignoringRequestMatchers("/v1/user")
                 ).authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(mvcMatcherBuilder.pattern("/v1/user/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/v1/user/login")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/v1/user")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/security/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/swagger-ui/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/swagger-resources/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/v3/api-docs/**")).permitAll()
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .exceptionHandling(exception ->
@@ -83,7 +84,7 @@ public class SecurityConfig {
                     config.setMaxAge(3600L);
                     return config;
                 }));
-        //http.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
+        http.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
