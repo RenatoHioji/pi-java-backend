@@ -6,6 +6,7 @@ import com.sunside.dto.user.UserDTOResponse;
 import com.sunside.security.JwtAuthResponse;
 import com.sunside.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("v1/user")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Authorization")
 public class UserController {
 
     private final UserService userService;

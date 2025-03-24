@@ -32,6 +32,9 @@ public class UserService {
     }
 
     public UserDTOResponse create(UserDTORequest userDTO) {
+        if(userRepository.findByUsername(userDTO.username()).isPresent()){
+            throw new BusinessException("Usuário existente");
+        }
         User user = UserMapper.map(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return UserMapper.map(userRepository.save(user));

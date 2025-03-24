@@ -3,6 +3,7 @@ package com.sunside.controller;
 import com.sunside.model.Quiz;
 import com.sunside.service.QuizService;
 import com.sunside.utils.IdUtills;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v1/quiz")
+@SecurityRequirement(name = "Authorization")
 public class QuizController {
     private final QuizService quizService;
 

@@ -3,6 +3,7 @@ package com.sunside.controller;
 import com.sunside.model.Game;
 import com.sunside.service.GameService;
 import com.sunside.utils.IdUtills;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("v1/game")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Authorization")
 public class GameController {
     private final GameService gameService;
 

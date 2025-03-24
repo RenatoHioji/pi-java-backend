@@ -7,6 +7,7 @@ import com.sunside.utils.IdUtills;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v1/item")
+@SecurityRequirement(name = "Authorization")
 public class ItemController {
     private final ItemService itemService;
-
 
     @GetMapping
     ResponseEntity<List<Item>> findAll(){
