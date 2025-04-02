@@ -1,8 +1,11 @@
 package com.sunside.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,4 +31,9 @@ public class Item {
     @Column(name = "user_id")
     private UUID userId;
 
+
+    @ManyToMany(mappedBy = "history")
+    @Builder.Default
+    @JsonIgnore
+    private Set<User> usersHistory = new HashSet<>();
 }

@@ -11,9 +11,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -28,7 +30,7 @@ public class ItemController {
         return ResponseEntity.ok(itemService.findAll());
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("/user/{userId}")
     ResponseEntity<List<Item>> findAllByUserId(@Parameter(example = "") @PathVariable("userId") String userId){
         return ResponseEntity.ok(itemService.findAllByUserId(IdUtills.transformToUuid(userId)));
     }
@@ -48,5 +50,19 @@ public class ItemController {
     @PutMapping(path = "{id}", consumes = {"multipart/form-data"})
     ResponseEntity<Item> updateItem(@PathVariable("id") String id, @Valid @ModelAttribute ItemDTORequest request){
         return ResponseEntity.ok(itemService.update(IdUtills.transformToUuid(id), request));
+    }
+
+    @GetMapping("{id}")
+    ResponseEntity<Item> findById(@PathVariable("id") String id, Principal principal){
+        return ResponseEntity.ok(itemService.findById(IdUtills.transformToUuid(id), principal.getName()));
+    }
+
+    @GetMapping("recents")
+    ResponseEntity<List<Item>> findRecents(Principal principal){
+        return ResponseEntity.ok(itemService.findRecents(principal.getName()));
+    }
+    @GetMapping("history")
+    ResponseEntity<List<Item>> findHistory(Principal principal){
+        return ResponseEntity.ok(itemService.findMoreViewed(principal.getName()));
     }
 }

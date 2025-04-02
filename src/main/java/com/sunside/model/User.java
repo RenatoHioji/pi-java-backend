@@ -26,5 +26,16 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @Builder.Default
     @OrderBy("id ASC")private Set<Item> items = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_history",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    @Builder.Default
+    private Set<Item> history = new HashSet<>();
+
 }

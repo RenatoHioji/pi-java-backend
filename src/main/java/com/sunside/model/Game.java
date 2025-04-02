@@ -31,5 +31,6 @@ public class Game {
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )
     @OrderBy("id ASC")
+    @Builder.Default
     private Set<Item> items = new HashSet<>();
 }

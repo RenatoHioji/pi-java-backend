@@ -35,3 +35,13 @@ CREATE TABLE game_item (
     PRIMARY KEY (game_id, item_id)
 );
 
+CREATE TABLE user_history (
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL,
+    item_id UUID NOT NULL,
+    viewed int,
+    last_viewed TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (item_id) REFERENCES items(id),
+    CONSTRAINT uq_user_item UNIQUE (user_id, item_id)
+);

@@ -5,11 +5,16 @@ import com.sunside.dto.item.ItemDTORequest;
 import com.sunside.exceptions.BusinessException;
 import com.sunside.mapper.ItemMapper;
 import com.sunside.model.Item;
+import com.sunside.model.User;
+import com.sunside.model.UserHistory;
 import com.sunside.repository.ItemRepository;
+import com.sunside.repository.UserHistoryRepository;
+import com.sunside.repository.UserRepository;
 import com.sunside.utils.AWSUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +23,8 @@ import java.util.UUID;
 public class ItemService {
     private final AWSUtils awsUtils;
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
+    private final UserHistoryRepository userHistoryRepository;
 
     public List<Item> findAll(){
         return itemRepository.findAll();
@@ -67,5 +74,57 @@ public class ItemService {
         awsUtils.saveFile(item.getVideo(), request.video());
         awsUtils.saveFile(item.getAudio(), request.audio());
         awsUtils.saveFile(item.getImage(), request.image());
+    }
+
+    public Item findById(UUID id, String username){
+        User user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new BusinessException("Usuário não encontrado."));
+
+        Item item = this.itemRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(("Item não encontrado.")));
+
+        updateUserHistory(user, item);
+
+        return item;
+    }
+
+    public void updateUserHistory(User user, Item item) {
+        this.userHistoryRepository.findByUserIdAndItemId(user.getId(), item.getId())
+                .ifPresentOrElse(
+                        this::updateHistoryView,
+                        () -> createNewUserHistory(user, item)
+                );
+    }
+
+    private void updateHistoryView(UserHistory history) {
+        int updatedViewCount = history.getViewed() + 1;
+        history.setViewed(updatedViewCount);
+        history.setLast_viewed(LocalDateTime.now());
+        this.userHistoryRepository.save(history);
+    }
+
+    private void createNewUserHistory(User user, Item item) {
+        UserHistory newUserHistory = UserHistory.builder()
+                .user(user)
+                .item(item)
+                .last_viewed(LocalDateTime.now())
+                .viewed(1)
+                .build();
+
+        this.userHistoryRepository.save(newUserHistory);
+    }
+
+    public List<Item> findRecents(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BusinessException("Usuário não encontrado."));
+
+        return this.userHistoryRepository.findRecents(user.getId());
+    }
+
+    public List<Item> findMoreViewed(String username){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BusinessException("Usuário não encontrado."));
+
+        return this.userHistoryRepository.findMoreViewed(user.getId());
     }
 }
