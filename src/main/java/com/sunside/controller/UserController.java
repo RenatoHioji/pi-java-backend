@@ -1,6 +1,7 @@
 package com.sunside.controller;
 
 import com.sunside.dto.user.LoginDTORequest;
+import com.sunside.dto.user.LoginDTOResponse;
 import com.sunside.dto.user.UserDTORequest;
 import com.sunside.dto.user.UserDTOResponse;
 import com.sunside.security.JwtAuthResponse;
@@ -41,8 +42,8 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<JwtAuthResponse> login(@Valid @RequestBody LoginDTORequest loginDTORequest){
-        return ResponseEntity.ok(new JwtAuthResponse(userService.login(loginDTORequest)));
+    public ResponseEntity<LoginDTOResponse> login(@Valid @RequestBody LoginDTORequest loginDTORequest){
+        return ResponseEntity.ok(userService.login(loginDTORequest));
     }
 
     @GetMapping("{username}")

@@ -1,6 +1,7 @@
 package com.sunside.service;
 
 import com.sunside.dto.user.LoginDTORequest;
+import com.sunside.dto.user.LoginDTOResponse;
 import com.sunside.dto.user.UserDTORequest;
 import com.sunside.dto.user.UserDTOResponse;
 import com.sunside.exceptions.BusinessException;
@@ -26,6 +27,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private final String TOKEN_TYPE = "Bearer";
 
     public List<UserDTOResponse> findAll(){
         return userRepository.findAll().stream().map(UserMapper::map).toList();
@@ -44,11 +46,12 @@ public class UserService {
         userRepository.deleteById(UUID.fromString(id));
     }
 
-    public String login(LoginDTORequest login){
+    public LoginDTOResponse login(LoginDTORequest login){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.username(), login.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtTokenProvider.generateToken(authentication);
+        User user = userRepository.findByUsername(login.username()).orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
+        return new LoginDTOResponse(jwtTokenProvider.generateToken(authentication), TOKEN_TYPE, user.getId());
     }
 
     public UserDTOResponse findByUsername(String username) {

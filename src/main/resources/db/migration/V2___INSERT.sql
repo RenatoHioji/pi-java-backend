@@ -54,7 +54,6 @@ inserted_items AS (
         (gen_random_uuid(), 'Uva', 'U-va', 'uva.webp', 'uva.mp4', 'uva.mp3', 'alimento', 'frutas')
     RETURNING id
 )
--- Assign row numbers to each game and item
 , numbered_items AS (
     SELECT id, ROW_NUMBER() OVER () AS item_row_number
     FROM inserted_items
@@ -63,7 +62,6 @@ numbered_games AS (
     SELECT id, ROW_NUMBER() OVER () AS game_row_number
     FROM inserted_games
 )
--- Insert 4 items per game
 INSERT INTO game_item (game_id, item_id)
 SELECT g.id, i.id
 FROM numbered_games g
