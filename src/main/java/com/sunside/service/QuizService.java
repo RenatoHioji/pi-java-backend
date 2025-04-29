@@ -22,5 +22,8 @@ public class QuizService {
     public Quiz findById(UUID id){
         return quizRepository.findById(id).orElseThrow(() -> new BusinessException("Quiz não foi encontrado"));
     }
+    public Quiz findRandom(){
+        return quizRepository.findRandom();
+    }
 
 }

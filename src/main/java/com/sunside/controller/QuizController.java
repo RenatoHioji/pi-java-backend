@@ -29,4 +29,9 @@ public class QuizController {
     public ResponseEntity<Quiz> findById(@PathVariable("id") String id){
         return ResponseEntity.ok(quizService.findById(IdUtills.transformToUuid(id)));
     }
+
+    @GetMapping("random")
+    public ResponseEntity<Quiz> findRandom(){
+        return ResponseEntity.ok(quizService.findRandom());
+    }
 }
