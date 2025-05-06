@@ -22,5 +22,14 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorResponseException, new HttpHeaders(), httpStatus, request);
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<Object> handlerInternalServerError(RuntimeException exception, WebRequest request){
+        HttpStatus httpStatus = HttpStatus.valueOf(500);
+        ErrorResponseException errorResponseException = new ErrorResponseException(
+                httpStatus.value(), httpStatus.getReasonPhrase(), List.of(exception.getMessage()));
+
+        return handleExceptionInternal(exception, errorResponseException, new HttpHeaders(), httpStatus, request);
+    }
+
 
 }
