@@ -1,6 +1,7 @@
 package com.sunside.service;
 
 
+import com.sunside.client.AIClient;
 import com.sunside.dto.item.ItemDTORequest;
 import com.sunside.exceptions.BusinessException;
 import com.sunside.mapper.ItemMapper;
@@ -13,6 +14,7 @@ import com.sunside.repository.UserRepository;
 import com.sunside.utils.AWSUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +27,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final UserHistoryRepository userHistoryRepository;
+    private final AIClient aiClient;
 
     public List<Item> findAll(){
         return itemRepository.findAll();
@@ -126,5 +129,9 @@ public class ItemService {
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado."));
 
         return this.userHistoryRepository.findMoreViewed(user.getId());
+    }
+
+    public String searchCategory(MultipartFile file){
+        return aiClient.searchCategory(file);
     }
 }

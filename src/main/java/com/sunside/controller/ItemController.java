@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -64,5 +66,14 @@ public class ItemController {
     @GetMapping("history")
     ResponseEntity<List<Item>> findHistory(Principal principal){
         return ResponseEntity.ok(itemService.findMoreViewed(principal.getName()));
+    }
+
+    @GetMapping(path ="/foto", consumes = {"multipart/form-data"})
+    ResponseEntity<String> searchCategory(
+            @NotNull(message = "Imagem não pode ser nula.")
+            @NotBlank(message = "Image não poed estar vazia.")
+            MultipartFile image
+    ){
+        return ResponseEntity.ok(itemService.searchCategory(image));
     }
 }
