@@ -1,28 +1,22 @@
 package com.sunside.configuration;
 
-import com.sunside.security.CsrfCookieFilter;
 import com.sunside.security.JwtAuthenticationEntryPoint;
 import com.sunside.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Parameter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -49,24 +43,9 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
 
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-        requestHandler.setCsrfRequestAttributeName("_csrf");
-
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
-        http.csrf(csrf -> csrf
-                        .csrfTokenRequestHandler(requestHandler)
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/v1/user/login")
-                        .ignoringRequestMatchers("/v1/user")
-                ).authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(mvcMatcherBuilder.pattern("/v1/user/login")).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/v1/user")).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern("/security/**")).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern("/swagger-ui/**")).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern("/swagger-resources/**")).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern("/v3/api-docs/**")).permitAll()
-                        .anyRequest().authenticated()
+        http.csrf(AbstractHttpConfigurer::disable
                 )
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .exceptionHandling(exception ->
@@ -84,7 +63,6 @@ public class SecurityConfig {
                     config.setMaxAge(3600L);
                     return config;
                 }));
-        http.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
