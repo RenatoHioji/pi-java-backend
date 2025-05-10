@@ -5,7 +5,8 @@ import java.util.UUID;
 public record LoginDTOResponse(
         String accessToken,
         String tokenType,
-        UUID id
+        UUID id,
+        String username
 ) {
 
 }

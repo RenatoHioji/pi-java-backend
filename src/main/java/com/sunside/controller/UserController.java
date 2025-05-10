@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTOResponse> create(@Valid @RequestBody UserDTORequest user){
+    public ResponseEntity<LoginDTOResponse> create(@Valid @RequestBody UserDTORequest user){
         return ResponseEntity.status(201).body(userService.create(user));
     }
 
@@ -49,5 +49,10 @@ public class UserController {
     @GetMapping("{username}")
     public ResponseEntity<UserDTOResponse> findByUsername(@PathVariable("username") String username){
         return ResponseEntity.ok(userService.findByUsername(username));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<UserDTOResponse> update(@PathVariable("id") @Parameter(example = "1e283e58-6273-4242-831e-3eb845a692ff") String id, @Valid @RequestBody LoginDTORequest loginDTORequest){
+        return ResponseEntity.ok(userService.updateById(id, loginDTORequest));
     }
 }
