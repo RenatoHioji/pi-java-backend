@@ -66,10 +66,18 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException("Usuário inexistente")));
     }
 
-    public UserDTOResponse updateById(String id, LoginDTORequest request){
+    public LoginDTOResponse updateById(String id, LoginDTORequest request){
         User oldUser = userRepository.findById(IdUtills.transformToUuid(id)).orElseThrow(() -> new BusinessException("Usuário não encontrado"));
+        if(userRepository.findByUsername(request.username()).isPresent()){
+            throw new BusinessException("Usuário existente");
+        }
         oldUser.setUsername(request.username());
-        oldUser.setPassword(request.password());
-        return UserMapper.map(userRepository.save(oldUser));
+        oldUser.setPassword(passwordEncoder.encode(request.password()));
+        userRepository.save(oldUser);
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return new LoginDTOResponse(jwtTokenProvider.generateToken(authentication), TOKEN_TYPE, oldUser.getId(), request.username());
+
     }
 }

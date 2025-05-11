@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDTOResponse> update(@PathVariable("id") @Parameter(example = "1e283e58-6273-4242-831e-3eb845a692ff") String id, @Valid @RequestBody LoginDTORequest loginDTORequest){
+    public ResponseEntity<LoginDTOResponse> update(@PathVariable("id") @Parameter(example = "1e283e58-6273-4242-831e-3eb845a692ff") String id, @Valid @RequestBody LoginDTORequest loginDTORequest){
         return ResponseEntity.ok(userService.updateById(id, loginDTORequest));
     }
 }
