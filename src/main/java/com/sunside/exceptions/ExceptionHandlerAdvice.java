@@ -1,5 +1,6 @@
 package com.sunside.exceptions;
 
+import feign.FeignException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,10 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(exception, errorResponseException, new HttpHeaders(), httpStatus, request);
     }
 
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<Object> handleFeignException(FeignException e) {
+        return ResponseEntity.status(e.status())
+                .body("Erro na comunicação com Flask: " + e.contentUTF8());
+    }
 
 }

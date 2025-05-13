@@ -1,5 +1,6 @@
 package com.sunside.controller;
 
+import com.sunside.dto.item.CategoryDTOResponse;
 import com.sunside.dto.item.ItemDTORequest;
 import com.sunside.model.Item;
 import com.sunside.service.ItemService;
@@ -68,11 +69,9 @@ public class ItemController {
         return ResponseEntity.ok(itemService.findMoreViewed(principal.getName()));
     }
 
-    @GetMapping(path ="/foto", consumes = {"multipart/form-data"})
-    ResponseEntity<String> searchCategory(
-            @NotNull(message = "Imagem não pode ser nula.")
-            @NotBlank(message = "Image não poed estar vazia.")
-            MultipartFile image
+    @PostMapping(path ="/foto", consumes = {"multipart/form-data"})
+    ResponseEntity<CategoryDTOResponse> searchCategory(
+            @RequestPart("file") MultipartFile image
     ){
         return ResponseEntity.ok(itemService.searchCategory(image));
     }

@@ -2,6 +2,7 @@ package com.sunside.service;
 
 
 import com.sunside.client.AIClient;
+import com.sunside.dto.item.CategoryDTOResponse;
 import com.sunside.dto.item.ItemDTORequest;
 import com.sunside.exceptions.BusinessException;
 import com.sunside.mapper.ItemMapper;
@@ -131,7 +132,7 @@ public class ItemService {
         return this.userHistoryRepository.findMoreViewed(user.getId());
     }
 
-    public String searchCategory(MultipartFile file){
+    public CategoryDTOResponse searchCategory(MultipartFile file){
         return aiClient.searchCategory(file);
     }
 }
