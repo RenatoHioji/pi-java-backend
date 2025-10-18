@@ -1,6 +1,6 @@
 package com.sunside.utils;
 
-import com.sunside.exceptions.BusinessException;
+import com.sunside.infrastructure.exceptions.BusinessException;
 
 import java.util.UUID;
 
