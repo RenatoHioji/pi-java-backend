@@ -1,5 +1,6 @@
 package com.sunside.adapters.outbound.repositories;
 
+import com.sunside.adapters.outbound.entities.JpaUserEntity;
 import com.sunside.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface JpaUserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByUsername(String username);
+public interface JpaUserRepository extends JpaRepository<JpaUserEntity, UUID> {
+    Optional<JpaUserEntity> findByUsername(String username);
 
 }
