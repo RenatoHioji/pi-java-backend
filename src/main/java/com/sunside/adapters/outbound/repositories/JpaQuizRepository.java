@@ -1,7 +1,6 @@
 package com.sunside.adapters.outbound.repositories;
 
 import com.sunside.adapters.outbound.entities.JpaQuizEntity;
-import com.sunside.domain.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
