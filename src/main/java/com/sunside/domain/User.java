@@ -1,40 +1,65 @@
 package com.sunside.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Builder
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
-    @Column(name = "username", unique = true)
     private String username; //email
     private String password;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @Builder.Default
-    @OrderBy("id ASC")private Set<Item> items = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_history",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
-    )
-    @Builder.Default
+    private Set<Item> items = new HashSet<>();
     private Set<Item> history = new HashSet<>();
 
+
+    public User(UUID id, String username, String password, Set<Item> items, Set<Item> history) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.items = items;
+        this.history = history;
+    }
+
+    public User() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+
+    public Set<Item> getHistory() {
+        return history;
+    }
+
+    public void setHistory(Set<Item> history) {
+        this.history = history;
+    }
 }
