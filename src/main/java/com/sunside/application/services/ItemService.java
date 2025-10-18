@@ -8,9 +8,9 @@ import com.sunside.utils.mappers.ItemMapper;
 import com.sunside.domain.Item;
 import com.sunside.domain.User;
 import com.sunside.domain.UserHistory;
-import com.sunside.adapters.outbound.repositories.ItemRepository;
-import com.sunside.adapters.outbound.repositories.UserHistoryRepository;
-import com.sunside.adapters.outbound.repositories.UserRepository;
+import com.sunside.adapters.outbound.repositories.JpaItemRepository;
+import com.sunside.adapters.outbound.repositories.JpaUserHistoryRepository;
+import com.sunside.adapters.outbound.repositories.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,9 +23,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ItemService {
     private final AwsService awsService;
-    private final ItemRepository itemRepository;
-    private final UserRepository userRepository;
-    private final UserHistoryRepository userHistoryRepository;
+    private final JpaItemRepository itemRepository;
+    private final JpaUserRepository userRepository;
+    private final JpaUserHistoryRepository userHistoryRepository;
     private final AIClient aiClient;
 
     public List<Item> findAll(){

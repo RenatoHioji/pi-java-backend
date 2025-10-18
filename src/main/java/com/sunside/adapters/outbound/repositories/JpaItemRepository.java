@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, UUID> {
+public interface JpaItemRepository extends JpaRepository<Item, UUID> {
     List<Item> findAllByUserId(UUID userId);
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserHistoryRepository extends JpaRepository<UserHistory, UUID> {
+public interface JpaUserHistoryRepository extends JpaRepository<UserHistory, UUID> {
 
     @Query("SELECT i FROM UserHistory uh JOIN uh.item i WHERE uh.user.id = :user_id ORDER BY uh.last_viewed DESC")
     List<Item> findRecents(@Param("user_id") UUID user_id);

@@ -2,7 +2,7 @@ package com.sunside.infrastructure.security;
 
 import com.sunside.infrastructure.exceptions.BusinessException;
 import com.sunside.domain.User;
-import com.sunside.adapters.outbound.repositories.UserRepository;
+import com.sunside.adapters.outbound.repositories.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @Component
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final JpaUserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws BusinessException {
         User user = userRepository.findByUsername(username)

@@ -7,7 +7,7 @@ import com.sunside.adapters.outbound.dto.UserDTOResponse;
 import com.sunside.infrastructure.exceptions.BusinessException;
 import com.sunside.utils.mappers.UserMapper;
 import com.sunside.domain.User;
-import com.sunside.adapters.outbound.repositories.UserRepository;
+import com.sunside.adapters.outbound.repositories.JpaUserRepository;
 import com.sunside.infrastructure.security.JwtTokenProvider;
 import com.sunside.utils.IdUtills;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
+    private final JpaUserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
