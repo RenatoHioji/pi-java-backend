@@ -20,6 +20,13 @@ public class User {
         this.history = history;
     }
 
+    public User(UUID id, String username){
+        this.id = id;
+        this.username = username;
+    }
+
+    public User(UUID id, String username, String password, Set<Item> items, Set<Item>)
+
     public User() {
     }
 
