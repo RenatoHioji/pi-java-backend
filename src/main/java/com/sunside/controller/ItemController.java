@@ -2,19 +2,16 @@ package com.sunside.controller;
 
 import com.sunside.dto.item.CategoryDTOResponse;
 import com.sunside.dto.item.ItemDTORequest;
+import com.sunside.dto.item.SyllablesDTORequest;
+import com.sunside.dto.item.SyllablesDTOResponse;
 import com.sunside.model.Item;
 import com.sunside.service.ItemService;
 import com.sunside.utils.IdUtills;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,5 +71,10 @@ public class ItemController {
             @RequestPart("file") MultipartFile image
     ){
         return ResponseEntity.ok(itemService.searchCategory(image));
+    }
+
+    @PostMapping(path="/syllables", consumes = {"multipart/form-data"})
+    ResponseEntity<SyllablesDTOResponse> divideSyllables(SyllablesDTORequest word){
+        return ResponseEntity.ok(itemService.divideSyllables(word));
     }
 }

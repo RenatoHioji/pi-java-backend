@@ -4,6 +4,8 @@ package com.sunside.service;
 import com.sunside.client.AIClient;
 import com.sunside.dto.item.CategoryDTOResponse;
 import com.sunside.dto.item.ItemDTORequest;
+import com.sunside.dto.item.SyllablesDTORequest;
+import com.sunside.dto.item.SyllablesDTOResponse;
 import com.sunside.exceptions.BusinessException;
 import com.sunside.mapper.ItemMapper;
 import com.sunside.model.Item;
@@ -134,5 +136,9 @@ public class ItemService {
 
     public CategoryDTOResponse searchCategory(MultipartFile file){
         return aiClient.searchCategory(file);
+    }
+
+    public SyllablesDTOResponse divideSyllables(SyllablesDTORequest word) {
+        return aiClient.divideSyllables(word);
     }
 }
