@@ -15,6 +15,6 @@ public interface AIClient {
     @PostMapping(path = "classificacao", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     CategoryDTOResponse searchCategory(@RequestPart("file") MultipartFile file);
 
-    @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "silabas", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     SyllablesDTOResponse divideSyllables(SyllablesDTORequest word);
 }
