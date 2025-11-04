@@ -74,7 +74,7 @@ public class ItemController {
     }
 
     @PostMapping(path="/syllables", consumes = {"multipart/form-data"})
-    ResponseEntity<SyllablesDTOResponse> divideSyllables(SyllablesDTORequest word){
+    ResponseEntity<SyllablesDTOResponse> divideSyllables(@RequestBody SyllablesDTORequest word){
         return ResponseEntity.ok(itemService.divideSyllables(word));
     }
 }
