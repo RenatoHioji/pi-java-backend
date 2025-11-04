@@ -73,7 +73,7 @@ public class ItemController {
         return ResponseEntity.ok(itemService.searchCategory(image));
     }
 
-    @PostMapping(path="/syllables", consumes = {"multipart/form-data"})
+    @PostMapping(path="/syllables")
     ResponseEntity<SyllablesDTOResponse> divideSyllables(@RequestBody SyllablesDTORequest word){
         return ResponseEntity.ok(itemService.divideSyllables(word));
     }
