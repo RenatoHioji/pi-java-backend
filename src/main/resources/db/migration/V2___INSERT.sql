@@ -22,7 +22,7 @@ inserted_games AS (
 inserted_items AS (
     INSERT INTO items (id, name, syllables, image, video, audio, category, subcategory)
     VALUES
-        (gen_random_uuid(), 'Me', 'Me', 'eu.webp', 'eu.mp4', 'eu.mp3', 'person', 'pronouns'),
+        (gen_random_uuid(), 'I', 'I', 'eu.webp', 'i.mp4', 'i.mp3', 'person', 'pronouns'),
         (gen_random_uuid(), 'You', 'You', 'voce.webp', 'voce.mp4', 'voce.mp3', 'person', 'pronouns'),
         (gen_random_uuid(), 'Friend', 'Friend', 'amigo.webp', 'amigo.mp4', 'amigo.mp3', 'person', 'acquaintance'),
         (gen_random_uuid(), 'Eat', 'Eat', 'comer.webp', 'comer.mp4', 'comer.mp3', 'action', 'verbs'),
@@ -51,10 +51,10 @@ inserted_items AS (
         (gen_random_uuid(), 'Wood', 'Wood', 'madeira.webp', 'madeira.mp4', 'madeira.mp3', 'material', 'elements'),
         (gen_random_uuid(), 'Duck', 'Duck', 'pato.webp', 'pato.mp4', 'pato.mp3', 'animal', 'birds'),
         (gen_random_uuid(), 'Yes', 'Yes', 'sim.webp', 'sim.mp4', 'sim.mp3', 'response', 'affirmative'),
-        (gen_random_uuid(), 'Grape', 'Grape', 'uva.webp', 'uva.mp4', 'uva.mp3', 'food', 'fruits'),
-        (gen_random_uuid(), 'Apple', 'Ap-ple', 'maca.webp', 'maca.mp4', 'maca.mp3', 'food', 'fruits'),
-        (gen_random_uuid(), 'Lemon', 'Le-mon', 'limao.webp', 'limao.mp4', 'limao.mp3', 'food', 'fruits'),
-        (gen_random_uuid(), 'Pineapple', 'Pine-ap-ple', 'abacaxi.webp', 'abacaxi.mp4', 'abacaxi.mp3', 'food', 'fruits')
+        ('2e6cc0da-8c57-4e19-ae02-9228ce74bdd2', 'Grape', 'Grape', 'uva.webp', 'uva.mp4', 'uva.mp3', 'food', 'fruits'),
+        ('5bb4d924-fdfc-4de4-9af2-efb69f102d7f', 'Apple', 'Ap-ple', 'maca.webp', 'maca.mp4', 'maca.mp3', 'food', 'fruits'),
+        ('7f8e3e4d-0f71-4c9d-9bd3-6c42eb5d6af0', 'Lemon', 'Le-mon', 'limao.webp', 'limao.mp4', 'limao.mp3', 'food', 'fruits'),
+        ('c1a34f5b-91d8-4e34-bc32-0ce0bf912b94', 'Pineapple', 'Pine-ap-ple', 'abacaxi.webp', 'abacaxi.mp4', 'abacaxi.mp3', 'food', 'fruits')
     RETURNING id
 )
 , numbered_items AS (
@@ -70,3 +70,17 @@ SELECT g.id, i.id
 FROM numbered_games g
 JOIN numbered_items i
 ON (i.item_row_number - 1) / 4 = g.game_row_number - 1;
+
+INSERT INTO quizzes (id, nivel)
+VALUES ('11111111-1111-4111-8111-111111111111', 0);
+
+INSERT INTO games (id, correct_answer, type, quiz_id)
+VALUES
+    ('aaaaaaa1-aaaa-4aaa-8aaa-aaaaaaaaaaa1', 0, 0, '11111111-1111-4111-8111-111111111111');
+
+INSERT INTO game_item (game_id, item_id)
+VALUES
+    ('aaaaaaa1-aaaa-4aaa-8aaa-aaaaaaaaaaa1', '2e6cc0da-8c57-4e19-ae02-9228ce74bdd2'),
+    ('aaaaaaa1-aaaa-4aaa-8aaa-aaaaaaaaaaa1', '5bb4d924-fdfc-4de4-9af2-efb69f102d7f'),
+    ('aaaaaaa1-aaaa-4aaa-8aaa-aaaaaaaaaaa1', '7f8e3e4d-0f71-4c9d-9bd3-6c42eb5d6af0'),
+    ('aaaaaaa1-aaaa-4aaa-8aaa-aaaaaaaaaaa1', 'c1a34f5b-91d8-4e34-bc32-0ce0bf912b94');

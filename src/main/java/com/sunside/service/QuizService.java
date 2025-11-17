@@ -23,7 +23,8 @@ public class QuizService {
         return quizRepository.findById(id).orElseThrow(() -> new BusinessException("Quiz não foi encontrado"));
     }
     public Quiz findRandom(){
-        return quizRepository.findRandom();
+        return quizRepository.findById(UUID.fromString("11111111-1111-4111-8111-111111111111"))
+                .orElse(null);
     }
 
 }
