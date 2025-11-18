@@ -41,7 +41,7 @@ inserted_items AS (
         (gen_random_uuid(), 'Sad', 'Sad', 'triste.webp', 'triste.mp4', 'triste.mp3', 'emotion', 'feelings'),
         (gen_random_uuid(), 'Angry', 'An-gry', 'bravo.webp', 'bravo.mp4', 'bravo.mp3', 'emotion', 'feelings'),
         (gen_random_uuid(), 'Love', 'Love', 'amor.webp', 'amor.mp4', 'amor.mp3', 'emotion', 'feelings'),
-        (gen_random_uuid(), 'Hunger', 'Hun-ger', 'fome.webp', 'fome.mp4', 'hungry.mp3', 'need', 'sensations'),
+        (gen_random_uuid(), 'Hungry', 'Hun-gry', 'fome.webp', 'fome.mp4', 'hungry.mp3', 'need', 'sensations'),
         (gen_random_uuid(), 'Want', 'Want', 'quero.webp', 'quero.mp4', 'quero.mp3', 'need', 'sensations'),
         (gen_random_uuid(), 'Dog', 'Dog', 'cachorro.webp', 'cachorro.mp4', 'cachorro.mp3', 'animal', 'mammals'),
         (gen_random_uuid(), 'Cat', 'Cat', 'gato.webp', 'gato.mp4', 'gato.mp3', 'animal', 'mammals'),
@@ -54,7 +54,7 @@ inserted_items AS (
         ('2e6cc0da-8c57-4e19-ae02-9228ce74bdd2', 'Grape', 'Grape', 'uva.webp', 'grape.mp4', 'grape.mp3', 'food', 'fruits'),
         ('5bb4d924-fdfc-4de4-9af2-efb69f102d7f', 'Apple', 'Ap-ple', 'maca.webp', 'apple.mp4', 'apple.mp3', 'food', 'fruits'),
         ('7f8e3e4d-0f71-4c9d-9bd3-6c42eb5d6af0', 'Lemon', 'Le-mon', 'limao.webp', 'lemon.mp4', 'lemon.mp3', 'food', 'fruits'),
-        ('c1a34f5b-91d8-4e34-bc32-0ce0bf912b94', 'Pineapple', 'Pine-ap-ple', 'abacaxi.webp', 'pineapple.mp4', 'pineapple.mp3', 'food', 'fruits')
+        ('c1a34f5b-91d8-4e34-bc32-0ce0bf912b94', 'Pineapple', 'Pi-ne-ap-ple', 'abacaxi.webp', 'pineapple.mp4', 'pineapple.mp3', 'food', 'fruits')
     RETURNING id
 )
 , numbered_items AS (
